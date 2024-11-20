@@ -3,23 +3,27 @@ import pandas as pd
 import numpy as np
 import plotly.figure_factory as ff
 
-from data.build_data import build_dataset
-from src.plot_libs import plot_hist
+from data.build_data import build_dataset, build_iris_data
+from src.plot_libs import hist_plot
+
+
 
 def main():
     st.header('Build dataset with number of classes')
     # Load dataset
-    options = st.slider('Choose number of classes', 1, 5, 1)
-    dataset = build_dataset(no_class=options)
-
-    st.subheader('Data Summary')
-    st.subheader('Plotting data distribution')
+    options_dataset = st.radio("", ['Iris Data', 'Manual Data'], horizontal=True)
+    st.write("------------------------------------------------")
+    if options_dataset == 'Iris Data':
+        dataset = build_iris_data()
+    else:
+        slider_no_class = st.sidebar.number_input('Choose number of classes', min_value=1, max_value=3)
+        slider_no_feature = st.sidebar.number_input('Choose number of feature', min_value=1, max_value=10)
+        dataset = build_dataset(no_class=slider_no_class, no_features=slider_no_feature)
+        
+    st.subheader(f'Data {options_dataset} Summary')
 
     # Create the histograms plots
-    feature = st.sidebar.selectbox("Choose a feature", 
-                        dataset.columns.to_list())
-    fig = plot_hist(dataset,feature_name=feature, class_labels=dataset.columns[-1])
-    st.plotly_chart(fig, use_container_width=True)
+    hist_plot(dataset=dataset)
 
     # Store dataset in session state
     st.session_state.df = dataset
