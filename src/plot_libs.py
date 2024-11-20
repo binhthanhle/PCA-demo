@@ -1,9 +1,12 @@
 import streamlit as st
-import plotly.figure_factory as ff
+
 import numpy as np
 import pandas as pd
-import plotly.express as px
+
 import matplotlib.pyplot as plt
+
+import plotly.figure_factory as ff
+import plotly.express as px
 
 def create_hist_plot(data: pd.DataFrame, feature_name=None, class_labels = 'label'):
     """

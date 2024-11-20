@@ -1,7 +1,4 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
-import plotly.figure_factory as ff
 
 from data.build_data import build_dataset, build_iris_data
 from src.plot_libs import hist_plot
@@ -21,7 +18,6 @@ def main():
         dataset = build_dataset(no_class=slider_no_class, no_features=slider_no_feature)
         
     st.subheader(f'Data {options_dataset} Summary')
-
     # Create the histograms plots
     hist_plot(dataset=dataset)
 
